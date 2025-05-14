@@ -1,9 +1,8 @@
 import jsonServer from "json-server";
-import { create, router, defaults } from "json-server";
 
-const server = create();
-const router = router("db.json"); // adjust path if needed
-const middlewares = defaults();
+const server = jsonServer.create();
+const router = jsonServer.router("db.json");
+const middlewares = jsonServer.defaults();
 
 server.use(middlewares);
 server.use(router);
