@@ -1,6 +1,8 @@
 // meetingApi.js
 // Logika CRUD dla rezerwacji spotkań (Meeting)
-const API_URL = "http://localhost:3000/meetings";
+// src/API/meetingApi.js
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = `${BASE_URL}/meetings`;
 
 export async function getMeetings(params = {}) {
   // params: { date, participant, status, sortBy, order }
