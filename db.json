@@ -23,6 +23,14 @@
       "password": "$2b$10$hashuser2",
       "role": "user",
       "createdAt": "2024-05-11T09:30:00.000Z"
+    },
+    {
+      "username": "ada@o2.pl",
+      "email": "ada@o2.pl",
+      "password": "ada@o2.pl",
+      "role": "user",
+      "createdAt": "2025-05-14T15:54:45.346Z",
+      "id": "ZBzxu7J"
     }
   ],
   "meetings": [
