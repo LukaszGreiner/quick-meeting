@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Typography, Box, Paper, Button, Chip } from "@mui/material";
 import MeetingForm from "./MeetingForm";
 import MeetingFilterSort from "./MeetingFilterSort";
-import * as meetingApi from "../meetingApi";
+import * as meetingApi from "../API/meetingApi";
 import CalendarView from "./CalendarView";
 import ListView from "./ListView";
 
