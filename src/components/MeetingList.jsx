@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react";
-import { Typography, Box, Paper, Button, Chip } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Paper,
+  Button,
+  Chip,
+  useTheme,
+  useMediaQuery,
+  Stack,
+  IconButton,
+} from "@mui/material";
 import MeetingForm from "./MeetingForm";
 import MeetingFilterSort from "./MeetingFilterSort";
 import * as meetingApi from "../API/meetingApi";
 import CalendarView from "./CalendarView";
 import ListView from "./ListView";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function MeetingList({ user, onLogout }) {
   const [meetings, setMeetings] = useState([]);
@@ -20,48 +34,11 @@ export default function MeetingList({ user, onLogout }) {
   const [view, setView] = useState("list"); // "list" lub "calendar"
   const isAdmin = user.role === "admin";
 
-  const fetchMeetings = async () => {
-    try {
-      // Pobierz dane z backendu (z filtrami poza sortowaniem i uczestnikiem)
-      let data = await meetingApi.getMeetings({
-        date: filters.date,
-        status: filters.status,
-      });
-      // Filtrowanie po uczestniku (frontend)
-      if (filters.participant) {
-        data = data.filter(
-          (m) =>
-            m.participants &&
-            m.participants.some((p) =>
-              p.toLowerCase().includes(filters.participant.toLowerCase())
-            )
-        );
-      }
-      // Sortowanie po stronie frontendu
-      if (filters.sortBy) {
-        data = [...data].sort((a, b) => {
-          let aVal = a[filters.sortBy];
-          let bVal = b[filters.sortBy];
-          // Jeśli sortujemy po dacie lub czasie, porównuj jako string lub Date
-          if (filters.sortBy === "date" || filters.sortBy === "createdAt") {
-            aVal = new Date(aVal);
-            bVal = new Date(bVal);
-          }
-          if (filters.sortBy === "startTime" || filters.sortBy === "endTime") {
-            // format hh:mm
-            aVal = aVal || "";
-            bVal = bVal || "";
-          }
-          if (aVal < bVal) return filters.order === "asc" ? -1 : 1;
-          if (aVal > bVal) return filters.order === "asc" ? 1 : -1;
-          return 0;
-        });
-      }
-      setMeetings(data);
-    } catch {
-      // obsługa błędów
-    }
-  };
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isExtraSmall = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const fetchMeetings = async () => {};
 
   useEffect(() => {
     fetchMeetings();
@@ -77,17 +54,25 @@ export default function MeetingList({ user, onLogout }) {
     setFormOpen(true);
   };
   const handleDelete = async (id) => {
-    await meetingApi.deleteMeeting(id);
-    fetchMeetings();
+    try {
+      await meetingApi.deleteMeeting(id);
+      fetchMeetings();
+    } catch (error) {
+      console.error("Błąd podczas usuwania spotkania:", error);
+    }
   };
   const handleFormSubmit = async (data) => {
-    if (editMeeting) {
-      await meetingApi.updateMeeting(editMeeting.id, data);
-    } else {
-      await meetingApi.createMeeting({ ...data, createdBy: user.email });
+    try {
+      if (editMeeting) {
+        await meetingApi.updateMeeting(editMeeting.id, data);
+      } else {
+        await meetingApi.createMeeting({ ...data, createdBy: user.email });
+      }
+      setFormOpen(false);
+      fetchMeetings();
+    } catch (error) {
+      console.error("Błąd podczas zapisu formularza:", error);
     }
-    setFormOpen(false);
-    fetchMeetings();
   };
   const handleFilterChange = (e) => {
     setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -103,53 +88,94 @@ export default function MeetingList({ user, onLogout }) {
   };
 
   return (
-    <Box p={2}>
+    <Box p={isMobile ? 1 : 2}>
       <Paper
         sx={{
-          p: 2,
+          p: isMobile ? 1.5 : 2,
           mb: 2,
           display: "flex",
+          flexDirection: isMobile ? "column" : "row",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: isMobile ? "flex-start" : "center",
+          gap: isMobile ? 1.5 : 0,
         }}
       >
-        <Typography variant="h6">
+        <Typography variant="h6" sx={{ mb: isMobile ? 1 : 0 }}>
           Witaj, {user.username} ({user.role})
         </Typography>
-        <Box>
+        <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
           <Button
             variant={view === "list" ? "contained" : "outlined"}
-            sx={{ mr: 1 }}
+            size="small"
             onClick={() => setView("list")}
+            startIcon={isMobile ? null : <ViewListIcon />}
+            sx={{
+              minWidth: isMobile ? "auto" : "90px",
+              px: isMobile ? 1 : 1.5,
+            }}
           >
-            Lista
+            {isMobile ? <ViewListIcon /> : "Lista"}
           </Button>
           <Button
             variant={view === "calendar" ? "contained" : "outlined"}
+            size="small"
             onClick={() => setView("calendar")}
+            startIcon={isMobile ? null : <CalendarMonthIcon />}
+            sx={{
+              minWidth: isMobile ? "auto" : "110px",
+              px: isMobile ? 1 : 1.5,
+            }}
           >
-            Kalendarz
+            {isMobile ? <CalendarMonthIcon /> : "Kalendarz"}
           </Button>
-          <Button onClick={onLogout} color="secondary" sx={{ ml: 2 }}>
-            Wyloguj
+          <Button
+            onClick={onLogout}
+            color="secondary"
+            size="small"
+            variant="outlined"
+            startIcon={isMobile ? null : <LogoutIcon />}
+            sx={{
+              minWidth: isMobile ? "auto" : "90px",
+              px: isMobile ? 1 : 1.5,
+            }}
+          >
+            {isMobile ? <LogoutIcon /> : "Wyloguj"}
           </Button>
-        </Box>
+        </Stack>
       </Paper>
-      <MeetingFilterSort
-        filters={filters}
-        onChange={handleFilterChange}
-        onReset={handleFilterReset}
-      />
+
+      <Paper sx={{ p: isMobile ? 1.5 : 2, mb: 2 }}>
+        <MeetingFilterSort
+          filters={filters}
+          onChange={handleFilterChange}
+          onReset={handleFilterReset}
+        />
+      </Paper>
+
       {view === "list" ? (
         <>
-          <Typography variant="h5" mb={2}>
-            Lista rezerwacji
-          </Typography>
-          <div>
-            <Button variant="contained" sx={{ mb: 2 }} onClick={handleAdd}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              justifyContent: "space-between",
+              alignItems: isMobile ? "flex-start" : "center",
+              mb: 2,
+              gap: isMobile ? 1.5 : 0,
+            }}
+          >
+            <Typography variant="h5" sx={{ mb: isMobile ? 1 : 0 }}>
+              Lista rezerwacji
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={handleAdd}
+              size={isMobile ? "small" : "medium"}
+              startIcon={<AddIcon />}
+            >
               Dodaj rezerwację
             </Button>
-          </div>
+          </Box>
           <ListView
             meetings={meetings}
             isAdmin={isAdmin}

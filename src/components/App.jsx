@@ -15,12 +15,22 @@ function App() {
         {showRegister ? (
           <>
             <Register onRegister={() => setShowRegister(false)} />
-            <Button onClick={() => setShowRegister(false)} sx={{ position: "absolute", top: 16, right: 16 }}>Masz konto? Zaloguj się</Button>
+            <Button
+              onClick={() => setShowRegister(false)}
+              sx={{ position: "absolute", top: 16, right: 16 }}
+            >
+              Masz konto? Zaloguj się
+            </Button>
           </>
         ) : (
           <>
             <Login onLogin={setUser} />
-            <Button onClick={() => setShowRegister(true)} sx={{ position: "absolute", top: 16, right: 16 }}>Nie masz konta? Zarejestruj się</Button>
+            <Button
+              onClick={() => setShowRegister(true)}
+              sx={{ position: "absolute", top: 16, right: 16 }}
+            >
+              Nie masz konta? Zarejestruj się
+            </Button>
           </>
         )}
       </Box>

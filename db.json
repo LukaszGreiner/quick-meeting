@@ -234,6 +234,19 @@
       ],
       "status": "scheduled",
       "createdBy": "jan.kowalski@example.com"
+    },
+    {
+      "title": "nowa rez",
+      "description": "nowa rez",
+      "date": "2025-05-16",
+      "startTime": "09:16",
+      "endTime": "09:19",
+      "participants": [
+        "admin@example.com"
+      ],
+      "status": "scheduled",
+      "createdBy": "admin@example.com",
+      "id": "TFk7XCM"
     }
   ]
 }

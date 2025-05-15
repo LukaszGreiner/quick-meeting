@@ -1,56 +1,43 @@
 import jsonServer from "json-server";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const server = jsonServer.create();
-const router = jsonServer.router("db.json");
+const router = jsonServer.router("db.json"); // Twoja baza danych
+
+// Użyj domyślnych middleware json-server, w tym serwowania statycznych plików
+// Skieruj serwowanie statyczne na katalog 'dist'
 const middlewares = jsonServer.defaults({
-  static: join(__dirname, "dist"), // Serve static files from the dist directory
+  static: join(__dirname, "dist"),
+  readOnly: false, // Umożliwia zapisy do db.json
 });
 
 server.use(middlewares);
 
-// Add CORS headers
+// Dodatkowe middleware (np. CORS, jeśli potrzebne poza domyślnymi)
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  // Twoje nagłówki CORS, jeśli domyślne z json-server nie wystarczą
+  // np. res.header('Access-Control-Allow-Origin', '*');
   next();
 });
 
-// Add API routes
-server.use("/api", router); // Optional: Move API to /api prefix for cleaner separation
+// Montowanie routera API. json-server domyślnie obsługuje ścieżki
+// na podstawie kluczy w db.json (np. /users, /meetings)
+// Jeśli chcesz mieć prefix /api, musisz to obsłużyć inaczej lub dostosować zapytania w frontendzie.
+// Dla prostoty, załóżmy, że frontend będzie odpytywał bezpośrednio /meetings, /users
+server.use(router); // Bez prefixu /api
 
-// For any route not related to API, serve the React app
-server.get("*", (req, res) => {
-  // Skip if it's an API route
-  if (
-    req.url.startsWith("/users") ||
-    req.url.startsWith("/meetings") ||
-    req.url.startsWith("/api")
-  ) {
-    return router(req, res);
-  }
-
-  // Serve the React app's index.html
-  const indexPath = join(__dirname, "dist", "index.html");
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res
-      .status(404)
-      .json({ error: "Frontend not built. Run 'npm run build' first." });
-  }
-});
+// json-server z opcją static sam powinien obsłużyć serwowanie index.html dla nieznalezionych ścieżek,
+// ale dla pewności można dodać fallback, chociaż może to kolidować z jego wewnętrzną logiką.
+// Generalnie, przy użyciu `jsonServer.defaults({ static: 'path' })`,
+// json-server powinien sam serwować index.html dla ścieżek niebędących API.
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log("Server is running on port", port);
+  console.log(
+    `JSON Server (frontend + API) działa na http://localhost:${port}`
+  );
 });
