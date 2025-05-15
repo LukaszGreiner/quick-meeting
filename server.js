@@ -15,7 +15,11 @@ const middlewares = jsonServer.defaults({
   readOnly: false, // Umożliwia zapisy do db.json
 });
 
+// Najpierw obsłuż statyczne pliki (frontend)
 server.use(middlewares);
+
+// Następnie obsłuż API (json-server router)
+server.use(router); // Bez prefixu /api
 
 // Dodatkowe middleware (np. CORS, jeśli potrzebne poza domyślnymi)
 server.use((req, res, next) => {
@@ -24,18 +28,12 @@ server.use((req, res, next) => {
   next();
 });
 
-// Montowanie routera API. json-server domyślnie obsługuje ścieżki
-// na podstawie kluczy w db.json (np. /users, /meetings)
-// Jeśli chcesz mieć prefix /api, musisz to obsłużyć inaczej lub dostosować zapytania w frontendzie.
-// Dla prostoty, załóżmy, że frontend będzie odpytywał bezpośrednio /meetings, /users
-server.use(router); // Bez prefixu /api
-
 // json-server z opcją static sam powinien obsłużyć serwowanie index.html dla nieznalezionych ścieżek,
 // ale dla pewności można dodać fallback, chociaż może to kolidować z jego wewnętrzną logiką.
 // Generalnie, przy użyciu `jsonServer.defaults({ static: 'path' })`,
 // json-server powinien sam serwować index.html dla ścieżek niebędących API.
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 server.listen(port, () => {
   console.log(
     `JSON Server (frontend + API) działa na http://localhost:${port}`

@@ -1,7 +1,7 @@
 // MeetingFilterSort.jsx
 // Komponent do filtrowania i sortowania rezerwacji
 import React from "react";
-import { Box, TextField, MenuItem, Button } from "@mui/material";
+import { Box, TextField, MenuItem, Button, InputLabel } from "@mui/material";
 
 const statusOptions = [
   { value: "", label: "Wszystkie" },
@@ -18,7 +18,7 @@ export default function MeetingFilterSort({ filters, onChange, onReset }) {
         type="date"
         value={filters.date || ""}
         onChange={onChange}
-        InputLabelProps={{ shrink: true }}
+        inputlabel={<InputLabel shrink={true}>Data</InputLabel>}
         size="small"
       />
       <TextField

@@ -38,7 +38,76 @@ export default function MeetingList({ user, onLogout }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isExtraSmall = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const fetchMeetings = async () => {};
+  const fetchMeetings = async () => {
+    try {
+      const data = await meetingApi.getMeetings(filters);
+      let filteredMeetings = data;
+      // Admin sees all, user sees only meetings where he is a participant
+      if (!isAdmin) {
+        filteredMeetings = filteredMeetings.filter(
+          (meeting) =>
+            meeting.participants && meeting.participants.includes(user.email)
+        );
+      }
+      // Filtrowanie po uczestniku (email)
+      if (filters.participant) {
+        filteredMeetings = filteredMeetings.filter(
+          (meeting) =>
+            Array.isArray(meeting.participants) &&
+            meeting.participants.some((p) =>
+              p.toLowerCase().includes(filters.participant.toLowerCase())
+            )
+        );
+      }
+      if (filters.sortBy) {
+        filteredMeetings = [...filteredMeetings].sort((a, b) => {
+          let aValue, bValue;
+          switch (filters.sortBy) {
+            case "startTime":
+              aValue =
+                a.date && a.startTime
+                  ? new Date(`${a.date}T${a.startTime}`)
+                  : null;
+              bValue =
+                b.date && b.startTime
+                  ? new Date(`${b.date}T${b.startTime}`)
+                  : null;
+              break;
+            case "createdAt":
+              // UWAGA: Jeśli createdAt nie istnieje, ustaw na bardzo wczesną datę, aby sortowanie było przewidywalne
+              aValue = a.createdAt ? new Date(a.createdAt) : new Date(0);
+              bValue = b.createdAt ? new Date(b.createdAt) : new Date(0);
+              break;
+            default:
+              aValue = a[filters.sortBy];
+              bValue = b[filters.sortBy];
+          }
+          if (
+            aValue === undefined ||
+            bValue === undefined ||
+            aValue === null ||
+            bValue === null
+          )
+            return 0;
+          if (aValue instanceof Date && bValue instanceof Date) {
+            if (filters.order === "desc") {
+              return bValue.getTime() - aValue.getTime();
+            } else {
+              return aValue.getTime() - bValue.getTime();
+            }
+          }
+          if (filters.order === "desc") {
+            return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
+          } else {
+            return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
+          }
+        });
+      }
+      setMeetings(filteredMeetings);
+    } catch (error) {
+      console.error("Błąd pobierania spotkań:", error);
+    }
+  };
 
   useEffect(() => {
     fetchMeetings();
@@ -66,7 +135,11 @@ export default function MeetingList({ user, onLogout }) {
       if (editMeeting) {
         await meetingApi.updateMeeting(editMeeting.id, data);
       } else {
-        await meetingApi.createMeeting({ ...data, createdBy: user.email });
+        await meetingApi.createMeeting({
+          ...data,
+          createdBy: user.email,
+          createdAt: new Date().toISOString(), // Dodaj createdAt przy tworzeniu nowej rezerwacji
+        });
       }
       setFormOpen(false);
       fetchMeetings();
