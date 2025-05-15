@@ -10,7 +10,7 @@ export default function Login({ onLogin }) {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch("/users?email=" + email);
+      const res = await fetch("http://localhost:3000/users?email=" + email);
       const users = await res.json();
       const user = users.find((u) => u.password === password);
       if (user) {
