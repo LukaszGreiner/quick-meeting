@@ -1,6 +1,3 @@
-// MeetingFilterSort.jsx
-// Komponent do filtrowania i sortowania rezerwacji
-import React from "react";
 import { Box, TextField, MenuItem, Button, InputLabel } from "@mui/material";
 
 const statusOptions = [

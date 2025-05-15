@@ -1,10 +1,7 @@
-const DEV_API_PREFIX = "/api"; // Używane tylko w trybie deweloperskim przez proxy Vite
+const DEV_API_PREFIX = "/api";
 const IS_DEV = import.meta.env.DEV;
 
 function getApiBasePath() {
-  // W trybie deweloperskim (npm run dev) używamy /api, które obsłuży proxy Vite.
-  // W trybie produkcyjnym (npm start z uproszczonym server.js) nie używamy prefixu,
-  // ponieważ json-server będzie serwował API bezpośrednio (np. /meetings).
   return IS_DEV ? DEV_API_PREFIX : "";
 }
 
@@ -20,7 +17,7 @@ export async function getMeetings(params = {}) {
 }
 
 export async function getMeeting(id) {
-  const basePath = getApiBasePath(); // POPRAWKA
+  const basePath = getApiBasePath();
   const url = new URL(`${basePath}/meetings/${id}`, window.location.origin);
   const res = await fetch(url.toString());
   if (!res.ok) throw new Error(`Błąd pobierania rezerwacji ${id} (getMeeting)`);
@@ -28,7 +25,7 @@ export async function getMeeting(id) {
 }
 
 export async function createMeeting(data) {
-  const basePath = getApiBasePath(); // POPRAWKA
+  const basePath = getApiBasePath();
   const url = new URL(`${basePath}/meetings`, window.location.origin);
   const res = await fetch(url.toString(), {
     method: "POST",
@@ -40,7 +37,7 @@ export async function createMeeting(data) {
 }
 
 export async function updateMeeting(id, data) {
-  const basePath = getApiBasePath(); // POPRAWKA
+  const basePath = getApiBasePath();
   const url = new URL(`${basePath}/meetings/${id}`, window.location.origin);
   const res = await fetch(url.toString(), {
     method: "PUT",
@@ -52,7 +49,7 @@ export async function updateMeeting(id, data) {
 }
 
 export async function deleteMeeting(id) {
-  const basePath = getApiBasePath(); // POPRAWKA
+  const basePath = getApiBasePath();
   const url = new URL(`${basePath}/meetings/${id}`, window.location.origin);
   const res = await fetch(url.toString(), {
     method: "DELETE",

@@ -20,18 +20,19 @@
 
 # Opis projektu
 
-**Quick Meeting** to progresywna aplikacja webowa do zarządzania rezerwacjami spotkań. Pozwala użytkownikom na rezerwowanie, edytowanie i anulowanie spotkań, a administratorowi na zarządzanie wszystkimi rezerwacjami i użytkownikami. Aplikacja korzysta z nowoczesnego, responsywnego interfejsu oraz mockowanego backendu (JSON Server).
+**Quick Meeting** to progresywna aplikacja webowa do zarządzania rezerwacjami spotkań. Pozwala użytkownikom na rezerwowanie, edytowanie i anulowanie spotkań, a administratorowi na zarządzanie wszystkimi rezerwacjami.
 
 ## Technologie
 
 - React (Vite)
 - Vite-PWA
 - Material UI
+- Fullcalendar
 - JSON Server (mock backend)
 
 ## Funkcjonalności
 
-- Rejestracja i logowanie użytkowników (JWT)
+- Rejestracja i logowanie użytkowników
 - Role: administrator (pełny dostęp) i użytkownik (zarządza własnymi rezerwacjami)
 - Dodawanie, edycja i anulowanie rezerwacji spotkań
 - Widok kalendarza i lista rezerwacji

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import * as meetingApi from "../API/meetingApi";
+import * as meetingApi from "../api/meetingApi";
 
 export default function useMeetings(user, isAdmin) {
   const [meetings, setMeetings] = useState([]);
@@ -9,8 +9,8 @@ export default function useMeetings(user, isAdmin) {
     date: "",
     participant: "",
     status: "",
-    sortBy: "",
-    order: "asc",
+    sortBy: "createdAt",
+    order: "desc",
   });
 
   const fetchMeetings = useCallback(async () => {

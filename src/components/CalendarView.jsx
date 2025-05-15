@@ -1,4 +1,3 @@
-// CalendarView.jsx
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import plLocale from "@fullcalendar/core/locales/pl";

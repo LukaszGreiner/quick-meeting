@@ -1,5 +1,3 @@
-// MeetingForm.jsx
-// Formularz do dodawania i edycji rezerwacji spotkań
 import { useState, useEffect } from "react";
 import {
   Button,

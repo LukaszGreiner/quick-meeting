@@ -33,18 +33,13 @@ export default defineConfig({
   define: {
     "process.env": {},
   },
-  // define: { // Możesz usunąć, jeśli nie jest potrzebne
-  //   "process.env": {},
-  // },
   server: {
-    port: 5173, // Port dla serwera deweloperskiego Vite
+    port: 5173, // Port Vite
     proxy: {
-      // Przekieruj wszystkie zapytania /api do json-server na porcie 3000
       "/api": {
         target: "http://localhost:3000", // Serwer API (json-server)
-        changeOrigin: true, // Potrzebne dla wirtualnych hostów
-        rewrite: (path) => path.replace(/^\/api/, ""), // Usuń /api z początku ścieżki
-        // np. /api/meetings -> /meetings
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },
