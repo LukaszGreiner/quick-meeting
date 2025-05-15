@@ -112,7 +112,7 @@ export default function MeetingForm({
             value={form.date}
             onChange={handleChange}
             fullWidth
-            InputLabel={{ shrink: true }}
+            InputLabelProps={{ shrink: true }}
             required
           />
           <TextField
@@ -123,7 +123,7 @@ export default function MeetingForm({
             value={form.startTime}
             onChange={handleChange}
             fullWidth
-            InputLabel={{ shrink: true }}
+            InputLabelProps={{ shrink: true }}
             required
           />
           <TextField
@@ -134,7 +134,7 @@ export default function MeetingForm({
             value={form.endTime}
             onChange={handleChange}
             fullWidth
-            InputLabel={{ shrink: true }}
+            InputLabelProps={{ shrink: true }}
             required
           />
           <TextField

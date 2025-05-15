@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   List,
   ListItem,
@@ -12,11 +13,11 @@ import {
   Paper,
   Tooltip,
   Avatar,
+  Pagination,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EventIcon from "@mui/icons-material/Event";
-// AccessTimeIcon is no longer needed here
 import DescriptionIcon from "@mui/icons-material/Description";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import PersonIcon from "@mui/icons-material/Person";
@@ -32,6 +33,19 @@ export default function ListView({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  // PAGINATION
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 5;
+  const pageCount = Math.ceil(meetings.length / itemsPerPage);
+  const paginatedMeetings = meetings.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
   if (meetings.length === 0) {
     return (
       <Box sx={{ p: 4, textAlign: "center" }}>
@@ -43,198 +57,192 @@ export default function ListView({
   }
 
   return (
-    <List sx={{ p: 0 }}>
-      {meetings.map((m) => (
-        <Paper
-          key={m.id}
-          elevation={1}
-          sx={{
-            mb: 2,
-            borderRadius: 2,
-            overflow: "hidden",
-            transition: "all 0.2s",
-            "&:hover": {
-              transform: "translateY(-2px)",
-              boxShadow: 3,
-            },
-          }}
-        >
-          <ListItem
+    <Box>
+      <List sx={{ p: 0 }}>
+        {paginatedMeetings.map((m) => (
+          <Paper
+            key={m.id}
+            elevation={1}
             sx={{
-              p: { xs: 1.5, md: 2.5 }, // Adjusted padding for mobile
-              bgcolor:
-                m.status === "canceled"
-                  ? "rgba(211, 47, 47, 0.05)"
-                  : "rgba(46, 125, 50, 0.05)",
-              borderLeft: `4px solid ${
-                m.status === "canceled"
-                  ? theme.palette.error.main
-                  : theme.palette.success.main
-              }`,
-              display: "flex",
-              flexDirection: "column", // Always column for better control on mobile
-              alignItems: "stretch", // Stretch items to full width
+              mb: 2,
+              borderRadius: 2,
+              overflow: "hidden",
+              transition: "all 0.2s",
+              "&:hover": {
+                transform: "translateY(-2px)",
+                boxShadow: 3,
+              },
             }}
           >
-            {/* Header with title, time and status chip */}
-            <Box
+            <ListItem
               sx={{
+                p: { xs: 1.5, md: 2.5 },
+                bgcolor:
+                  m.status === "canceled"
+                    ? "rgba(211, 47, 47, 0.05)"
+                    : "rgba(46, 125, 50, 0.05)",
+                borderLeft: `4px solid ${
+                  m.status === "canceled"
+                    ? theme.palette.error.main
+                    : theme.palette.success.main
+                }`,
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start", // Align items to the start for multiline titles
-                mb: 1.5,
-                flexWrap: "wrap", // Allow wrapping for very long titles/times
+                flexDirection: "column",
+                alignItems: "stretch",
               }}
             >
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  flexGrow: 1,
-                  mr: 1,
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  mb: 1.5,
+                  flexWrap: "wrap",
                 }}
               >
-                <SubjectIcon color="primary" fontSize="small" />
-                <Typography
-                  variant="h6"
-                  component="h3"
-                  sx={{ fontWeight: 500, lineHeight: 1.3 }} // Adjusted line height
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    flexGrow: 1,
+                    mr: 1,
+                  }}
                 >
-                  {m.title}
-                  {m.startTime && m.endTime && (
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ ml: 0.5 }}
-                    >
-                      | {m.startTime} - {m.endTime}
-                    </Typography>
-                  )}
-                </Typography>
-              </Box>
-              <Chip
-                label={m.status === "scheduled" ? "Zaplanowane" : "Anulowane"}
-                color={m.status === "scheduled" ? "success" : "error"}
-                size="small"
-                sx={{
-                  mt: isMobile ? 0.5 : 0,
-                  ml: isMobile ? 0 : 1,
-                  alignSelf: "flex-start",
-                }} // Adjust margin for mobile
-              />
-            </Box>
-
-            {/* Meeting details with icons */}
-            <Stack spacing={1} sx={{ width: "100%" }}>
-              {" "}
-              {/* Ensure stack takes full width */}
-              {/* Date row */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <EventIcon fontSize="small" color="action" />
-                <Typography variant="body2" color="text.secondary">
-                  {m.date}
-                </Typography>
-              </Box>
-              {/* Description row */}
-              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
-                <DescriptionIcon
-                  fontSize="small"
-                  color="action"
-                  sx={{ mt: 0.3 }}
-                />
-                <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
-                  {m.description || "Brak opisu"}
-                </Typography>
-              </Box>
-              {/* Participants row */}
-              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
-                <PeopleAltIcon
-                  fontSize="small"
-                  color="action"
-                  sx={{ mt: 0.3 }}
-                />
-                <Box sx={{ flexGrow: 1 }}>
+                  <SubjectIcon color="primary" fontSize="small" />
                   <Typography
-                    variant="caption" // Smaller text for "Uczestnicy" label
-                    color="text.secondary"
-                    display="block"
-                    sx={{ mb: 0.5 }}
+                    variant="h6"
+                    component="h3"
+                    sx={{ fontWeight: 500, lineHeight: 1.3 }}
                   >
-                    Uczestnicy:
+                    {m.title}
+                    {m.startTime && m.endTime && (
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ ml: 0.5 }}
+                      >
+                        | {m.startTime} - {m.endTime}
+                      </Typography>
+                    )}
                   </Typography>
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {m.participants.map((participant, i) => (
-                      <Tooltip key={i} title={participant}>
-                        <Chip
-                          avatar={
-                            <Avatar
-                              sx={{
-                                width: 20,
-                                height: 20,
-                                fontSize: "0.75rem",
-                              }}
-                            >
-                              {participant.charAt(0).toUpperCase()}
-                            </Avatar>
-                          }
-                          label={participant.split("@")[0]}
-                          size="small"
-                          variant="outlined"
-                        />
-                      </Tooltip>
-                    ))}
+                </Box>
+                <Chip
+                  label={m.status === "scheduled" ? "Zaplanowane" : "Anulowane"}
+                  color={m.status === "scheduled" ? "success" : "error"}
+                  size="small"
+                  sx={{
+                    mt: isMobile ? 0.5 : 0,
+                    ml: isMobile ? 0 : 1,
+                    alignSelf: "flex-start",
+                  }}
+                />
+              </Box>
+
+              <Stack spacing={1} sx={{ width: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <EventIcon fontSize="small" color="action" />
+                  <Typography variant="body2" color="text.secondary">
+                    {m.date}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
+                  <DescriptionIcon
+                    fontSize="small"
+                    color="action"
+                    sx={{ mt: 0.3 }}
+                  />
+                  <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
+                    {m.description || "Brak opisu"}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
+                  <PeopleAltIcon
+                    fontSize="small"
+                    color="action"
+                    sx={{ mt: 0.3 }}
+                  />
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {m.participants.map((participant, i) => (
+                        <Tooltip key={i} title={participant}>
+                          <Chip
+                            avatar={
+                              <Avatar
+                                sx={{
+                                  width: 20,
+                                  height: 20,
+                                  fontSize: "0.75rem",
+                                }}
+                              >
+                                {participant.charAt(0).toUpperCase()}
+                              </Avatar>
+                            }
+                            label={participant.split("@")[0]}
+                            size="small"
+                            variant="outlined"
+                          />
+                        </Tooltip>
+                      ))}
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-              {/* Created by info */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <PersonIcon fontSize="small" color="action" />
-                <Typography variant="caption" color="text.secondary">
-                  {" "}
-                  {/* Smaller text */}
-                  Utworzone przez: {m.createdBy}
-                </Typography>
-              </Box>
-            </Stack>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <PersonIcon fontSize="small" color="action" />
+                  <Typography variant="caption" color="text.secondary">
+                    {m.createdBy}
+                  </Typography>
+                </Box>
+              </Stack>
 
-            {/* Action buttons */}
-            {(isAdmin || m.createdBy === user.email) && (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  mt: 1.5, // Reduced margin top
-                  gap: 1,
-                  width: "100%", // Ensure buttons take full width for justification
-                }}
-              >
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="primary"
-                  startIcon={<EditIcon />}
-                  onClick={() => onEdit(m)}
-                  sx={{ borderRadius: 2, flexGrow: isMobile ? 1 : 0 }} // Buttons grow on mobile
+              {(isAdmin || m.createdBy === user.email) && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    mt: 1.5,
+                    gap: 1,
+                    width: "100%",
+                  }}
                 >
-                  Edytuj
-                </Button>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="error"
-                  startIcon={<DeleteOutlineIcon />}
-                  onClick={() => onDelete(m.id)}
-                  sx={{ borderRadius: 2, flexGrow: isMobile ? 1 : 0 }} // Buttons grow on mobile
-                >
-                  Usuń
-                </Button>
-              </Box>
-            )}
-          </ListItem>
-        </Paper>
-      ))}
-    </List>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<EditIcon />}
+                    onClick={() => onEdit(m)}
+                    sx={{ borderRadius: 2, flexGrow: isMobile ? 1 : 0 }}
+                  >
+                    Edytuj
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="error"
+                    startIcon={<DeleteOutlineIcon />}
+                    onClick={() => onDelete(m.id)}
+                    sx={{ borderRadius: 2, flexGrow: isMobile ? 1 : 0 }}
+                  >
+                    Usuń
+                  </Button>
+                </Box>
+              )}
+            </ListItem>
+          </Paper>
+        ))}
+      </List>
+      {pageCount > 1 && (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+          <Pagination
+            count={pageCount}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+            shape="rounded"
+          />
+        </Box>
+      )}
+    </Box>
   );
 }

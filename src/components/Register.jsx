@@ -6,7 +6,7 @@ export default function Register({ onRegister }) {
     username: "",
     email: "",
     password: "",
-    confirm: ""
+    confirm: "",
   });
   const [error, setError] = useState("");
 
@@ -30,8 +30,8 @@ export default function Register({ onRegister }) {
           email: form.email,
           password: form.password,
           role: "user",
-          createdAt: new Date().toISOString()
-        })
+          createdAt: new Date().toISOString(),
+        }),
       });
       if (res.ok) {
         onRegister();
@@ -44,53 +44,55 @@ export default function Register({ onRegister }) {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-      <Paper elevation={3} sx={{ p: 4, minWidth: 320 }}>
-        <Typography variant="h5" mb={2}>Rejestracja</Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Nazwa użytkownika"
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Hasło"
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Powtórz hasło"
-            name="confirm"
-            type="password"
-            value={form.confirm}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          {error && <Typography color="error">{error}</Typography>}
-          <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>Zarejestruj</Button>
-        </form>
-      </Paper>
-    </Box>
+    <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
+      <Typography variant="h5" mb={2}>
+        Rejestracja
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Nazwa użytkownika"
+          name="username"
+          value={form.username}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Email"
+          name="email"
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Hasło"
+          name="password"
+          type="password"
+          value={form.password}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Powtórz hasło"
+          name="confirm"
+          type="password"
+          value={form.confirm}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+        />
+        {error && <Typography color="error">{error}</Typography>}
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+          Zarejestruj
+        </Button>
+      </form>
+    </Paper>
   );
 }

@@ -3,7 +3,7 @@
     {
       "id": "1",
       "username": "admin",
-      "email": "admin@example.com",
+      "email": "admin@admin.com",
       "password": "admin",
       "role": "admin",
       "createdAt": "2024-05-01T10:00:00.000Z"
@@ -23,260 +23,96 @@
       "password": "$2b$10$hashuser2",
       "role": "user",
       "createdAt": "2024-05-11T09:30:00.000Z"
-    },
-    {
-      "username": "ada@o2.pl",
-      "email": "ada@o2.pl",
-      "password": "ada@o2.pl",
-      "role": "user",
-      "createdAt": "2025-05-14T15:54:45.346Z",
-      "id": "ZBzxu7J"
     }
   ],
   "meetings": [
     {
-      "id": "3",
-      "title": "ulu",
-      "description": "",
-      "date": "2024-05-17",
-      "startTime": "15:31",
-      "endTime": "15:31",
-      "participants": [
-        "asd@ad.pl"
-      ],
+      "id": "m1",
+      "title": "Spotkanie projektowe",
+      "description": "Omówienie postępów projektu i przydział nowych zadań.",
+      "date": "2025-05-16",
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "participants": ["admin@admin.com", "jan.kowalski@example.com"],
+      "createdBy": "admin@admin.com",
+      "status": "canceled",
+      "createdAt": "2025-05-10T09:00:00.000Z"
+    },
+    {
+      "id": "m2",
+      "title": "Spotkanie zespołu marketingu",
+      "description": "Planowanie kampanii reklamowej na czerwiec.",
+      "date": "2025-05-17",
+      "startTime": "13:00",
+      "endTime": "14:00",
+      "participants": ["admin@admin.com", "anna.nowak@example.com"],
       "createdBy": "anna.nowak@example.com",
-      "status": "canceled",
-      "createdAt": "2024-05-17T15:31:00.000Z"
+      "status": "scheduled",
+      "createdAt": "2025-05-11T12:00:00.000Z"
     },
     {
-      "id": "d8d5",
-      "title": "Rezerwacja Admina",
-      "description": "Rezerwacja Admina",
-      "date": "2025-05-14",
-      "startTime": "14:35",
-      "endTime": "14:35",
+      "id": "m3",
+      "title": "Podsumowanie miesiąca",
+      "description": "Analiza wyników i raportowanie do zarządu.",
+      "date": "2025-05-20",
+      "startTime": "15:00",
+      "endTime": "16:00",
       "participants": [
-        "jan.kowalski@example.com"
+        "admin@admin.com",
+        "jan.kowalski@example.com",
+        "anna.nowak@example.com"
       ],
-      "status": "canceled",
-      "createdBy": "admin@example.com",
-      "createdAt": "2025-05-14T14:35:00.000Z"
+      "createdBy": "admin@admin.com",
+      "status": "scheduled",
+      "createdAt": "2025-05-12T14:00:00.000Z"
     },
     {
-      "id": "a1",
-      "title": "Spotkanie Zarządu 1",
-      "description": "Omówienie strategii firmy.",
-      "date": "2025-05-15",
+      "id": "m4",
+      "title": "Spotkanie z klientem",
+      "description": "Prezentacja nowej oferty dla klienta.",
+      "date": "2025-05-21",
       "startTime": "09:00",
       "endTime": "10:00",
-      "participants": [
-        "admin@example.com",
-        "jan.kowalski@example.com"
-      ],
-      "createdBy": "admin@example.com",
+      "participants": ["jan.kowalski@example.com", "anna.nowak@example.com"],
+      "createdBy": "jan.kowalski@example.com",
+      "status": "scheduled",
+      "createdAt": "2025-05-13T08:00:00.000Z"
+    },
+    {
+      "id": "m5",
+      "title": "Szkolenie wewnętrzne",
+      "description": "Szkolenie z nowego systemu CRM.",
+      "date": "2025-05-22",
+      "startTime": "11:00",
+      "endTime": "12:30",
+      "participants": ["admin@admin.com", "anna.nowak@example.com"],
+      "createdBy": "admin@admin.com",
+      "status": "scheduled",
+      "createdAt": "2025-05-14T10:00:00.000Z"
+    },
+    {
+      "id": "m6",
+      "title": "Konsultacje indywidualne",
+      "description": "Omówienie indywidualnych postępów pracowników.",
+      "date": "2025-05-23",
+      "startTime": "14:00",
+      "endTime": "15:00",
+      "participants": ["anna.nowak@example.com"],
+      "createdBy": "anna.nowak@example.com",
       "status": "scheduled",
       "createdAt": "2025-05-15T09:00:00.000Z"
     },
     {
-      "id": "a2",
-      "title": "Spotkanie Zarządu 2",
-      "description": "Planowanie budżetu.",
-      "date": "2025-05-16",
-      "startTime": "11:00",
-      "endTime": "12:00",
-      "participants": [
-        "admin@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-16T11:00:00.000Z"
-    },
-    {
-      "id": "a3",
-      "title": "Spotkanie Zarządu 3",
-      "description": "Analiza wyników Q1.",
-      "date": "2025-05-17",
-      "startTime": "13:00",
-      "endTime": "14:00",
-      "participants": [
-        "admin@example.com",
-        "anna.nowak@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-17T13:00:00.000Z"
-    },
-    {
-      "id": "a4",
-      "title": "Spotkanie Zarządu 4",
-      "description": "Rekrutacja nowych pracowników.",
-      "date": "2025-05-18",
-      "startTime": "10:00",
-      "endTime": "11:00",
-      "participants": [
-        "admin@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-18T10:00:00.000Z"
-    },
-    {
-      "id": "a5",
-      "title": "Spotkanie Zarządu 5",
-      "description": "Podsumowanie projektów.",
-      "date": "2025-05-19",
-      "startTime": "15:00",
-      "endTime": "16:00",
-      "participants": [
-        "admin@example.com",
-        "jan.kowalski@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-19T15:00:00.000Z"
-    },
-    {
-      "id": "a6",
-      "title": "Spotkanie Zarządu 6",
-      "description": "Omówienie benefitów.",
-      "date": "2025-05-20",
-      "startTime": "08:00",
-      "endTime": "09:00",
-      "participants": [
-        "admin@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-20T08:00:00.000Z"
-    },
-    {
-      "id": "a7",
-      "title": "Spotkanie Zarządu 7",
-      "description": "Nowe technologie w firmie.",
-      "date": "2025-05-21",
-      "startTime": "12:00",
-      "endTime": "13:00",
-      "participants": [
-        "admin@example.com",
-        "anna.nowak@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-21T12:00:00.000Z"
-    },
-    {
-      "id": "a8",
-      "title": "Spotkanie Zarządu 8",
-      "description": "Szkolenia pracowników.",
-      "date": "2025-05-22",
-      "startTime": "14:00",
-      "endTime": "15:00",
-      "participants": [
-        "admin@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-22T14:00:00.000Z"
-    },
-    {
-      "id": "a9",
-      "title": "Spotkanie Zarządu 9",
-      "description": "Wdrożenie nowego systemu.",
-      "date": "2025-05-23",
-      "startTime": "10:00",
-      "endTime": "11:00",
-      "participants": [
-        "admin@example.com",
-        "jan.kowalski@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-23T10:00:00.000Z"
-    },
-    {
-      "id": "a10",
-      "title": "Spotkanie Zarządu 10",
-      "description": "Podsumowanie miesiąca.",
+      "id": "m7",
+      "title": "Planowanie sprintu",
+      "description": "Ustalenie zadań na kolejny sprint.",
       "date": "2025-05-24",
-      "startTime": "16:00",
-      "endTime": "17:00",
-      "participants": [
-        "admin@example.com",
-        "anna.nowak@example.com"
-      ],
-      "createdBy": "admin@example.com",
-      "status": "scheduled",
-      "createdAt": "2025-05-24T16:00:00.000Z"
-    },
-    {
-      "id": "db00",
-      "title": "REZERWACJA",
-      "description": "REZERWACJA",
-      "date": "2025-05-25",
-      "startTime": "14:42",
-      "endTime": "14:45",
-      "participants": [
-        "jan.kowalski@example.com"
-      ],
-      "status": "canceled",
-      "createdBy": "admin@example.com",
-      "createdAt": "2025-05-25T14:42:00.000Z"
-    },
-    {
-      "id": "7766",
-      "title": "JAN KOWAL",
-      "description": "JAN KOWAL",
-      "date": "2025-05-26",
-      "startTime": "15:26",
-      "endTime": "15:26",
-      "participants": [
-        "JAN KOWAL"
-      ],
-      "status": "scheduled",
+      "startTime": "10:30",
+      "endTime": "11:30",
+      "participants": ["admin@admin.com", "jan.kowalski@example.com"],
       "createdBy": "jan.kowalski@example.com",
-      "createdAt": "2025-05-26T15:26:00.000Z"
-    },
-    {
-      "id": "9ff4",
-      "title": "asd",
-      "description": "das",
-      "date": "2025-05-27",
-      "startTime": "15:57",
-      "endTime": "15:56",
-      "participants": [
-        "jan.kowalski@example.com"
-      ],
       "status": "scheduled",
-      "createdBy": "jan.kowalski@example.com",
-      "createdAt": "2025-05-27T15:57:00.000Z"
-    },
-    {
-      "title": "nowa rez",
-      "description": "nowa rez",
-      "date": "2025-05-28",
-      "startTime": "09:16",
-      "endTime": "09:19",
-      "participants": [
-        "admin@example.com"
-      ],
-      "status": "scheduled",
-      "createdBy": "admin@example.com",
-      "id": "TFk7XCM",
-      "createdAt": "2025-05-28T09:16:00.000Z"
-    },
-    {
-      "title": "Najnowsza rezerwacja",
-      "description": "Najnowsza rezerwacja",
-      "date": "2025-05-29",
-      "startTime": "10:45",
-      "endTime": "10:46",
-      "participants": [
-        "admin@example.com"
-      ],
-      "status": "scheduled",
-      "createdBy": "admin@example.com",
-      "id": "w6mOjYg",
-      "createdAt": "2025-05-29T10:45:00.000Z"
+      "createdAt": "2025-05-15T10:00:00.000Z"
     }
   ]
 }

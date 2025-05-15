@@ -1,12 +1,55 @@
-# React + Vite
+# Instrukcja Instalacji
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. Zainstaluj zależności:
+   ```bash
+   npm install
+   ```
+2. Zbuduj aplikację:
+   ```bash
+   npm run build
+   ```
+3. Uruchom serwer developerski:
+   ```bash
+   npm run start
+   ```
+4. Otwórz stronę pod adresem http://localhost:3000/
 
-Currently, two official plugins are available:
+5. Zaloguj się na konto testowe ([dane kont znajdziesz poniżej](#konta-testowe)) lub utwórz własne
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+# Opis projektu
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Quick Meeting** to progresywna aplikacja webowa do zarządzania rezerwacjami spotkań. Pozwala użytkownikom na rezerwowanie, edytowanie i anulowanie spotkań, a administratorowi na zarządzanie wszystkimi rezerwacjami i użytkownikami. Aplikacja korzysta z nowoczesnego, responsywnego interfejsu oraz mockowanego backendu (JSON Server).
+
+## Technologie
+
+- React (Vite)
+- Vite-PWA
+- Material UI
+- JSON Server (mock backend)
+
+## Funkcjonalności
+
+- Rejestracja i logowanie użytkowników (JWT)
+- Role: administrator (pełny dostęp) i użytkownik (zarządza własnymi rezerwacjami)
+- Dodawanie, edycja i anulowanie rezerwacji spotkań
+- Widok kalendarza i lista rezerwacji
+- Filtrowanie i sortowanie rezerwacji (po dacie, uczestnikach, statusie)
+- Responsywny design
+- Walidacja pól i obsługa błędów
+
+## Role użytkowników
+
+- **Administrator**: pełny dostęp do wszystkich rezerwacji i użytkowników
+- **Użytkownik**: zarządza własnymi rezerwacjami
+
+# Opis działania aplikacji
+
+Po uruchomieniu aplikacji użytkownik może się zarejestrować lub zalogować. Po zalogowaniu dostępny jest widok kalendarza oraz lista rezerwacji. Użytkownik może dodawać, edytować i anulować własne rezerwacje. Administrator ma dostęp do wszystkich rezerwacji i użytkowników. System umożliwia filtrowanie i sortowanie spotkań oraz zapewnia walidację danych i obsługę błędów.
+
+## Konta testowe
+
+- Konto administratora: **admin@admin.com** / hasło: **admin**
+- Konto użytkownika: **jan.kowalski@example.com** / hasło: **$2b$10$hashuser1**
+- Możesz także utworzyć nowe konto przez formularz rejestracji.

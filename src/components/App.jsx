@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Login from "./Login";
-import Register from "./Register";
-import MeetingList from "./MeetingList";
-import { CssBaseline, Button, Box } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import LoginPage from "../pages/LoginPage";
+import SignUpPage from "../pages/SignUpPage";
+import HomePage from "../pages/HomePage";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -10,34 +10,24 @@ function App() {
 
   if (!user) {
     return (
-      <Box>
+      <>
         <CssBaseline />
         {showRegister ? (
-          <>
-            <Register onRegister={() => setShowRegister(false)} />
-            <Button
-              onClick={() => setShowRegister(false)}
-              sx={{ position: "absolute", top: 16, right: 16 }}
-            >
-              Masz konto? Zaloguj się
-            </Button>
-          </>
+          <SignUpPage
+            onRegister={() => setShowRegister(false)}
+            onSwitchToLogin={() => setShowRegister(false)}
+          />
         ) : (
-          <>
-            <Login onLogin={setUser} />
-            <Button
-              onClick={() => setShowRegister(true)}
-              sx={{ position: "absolute", top: 16, right: 16 }}
-            >
-              Nie masz konta? Zarejestruj się
-            </Button>
-          </>
+          <LoginPage
+            onLogin={setUser}
+            onSwitchToRegister={() => setShowRegister(true)}
+          />
         )}
-      </Box>
+      </>
     );
   }
 
-  return <MeetingList user={user} onLogout={() => setUser(null)} />;
+  return <HomePage user={user} onLogout={() => setUser(null)} />;
 }
 
 export default App;

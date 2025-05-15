@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, TextField, Typography, Box, Paper } from "@mui/material";
+import { Button, TextField, Typography, Paper } from "@mui/material";
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -24,32 +24,34 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-      <Paper elevation={3} sx={{ p: 4, minWidth: 320 }}>
-        <Typography variant="h5" mb={2}>Logowanie</Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Hasło"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            fullWidth
-            margin="normal"
-            required
-          />
-          {error && <Typography color="error">{error}</Typography>}
-          <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>Zaloguj</Button>
-        </form>
-      </Paper>
-    </Box>
+    <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
+      <Typography variant="h5" mb={2}>
+        Logowanie
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          fullWidth
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Hasło"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          margin="normal"
+          required
+        />
+        {error && <Typography color="error">{error}</Typography>}
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+          Zaloguj
+        </Button>
+      </form>
+    </Paper>
   );
 }

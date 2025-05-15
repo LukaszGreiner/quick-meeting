@@ -11,14 +11,23 @@ const statusOptions = [
 
 export default function MeetingFilterSort({ filters, onChange, onReset }) {
   return (
-    <Box display="flex" gap={2} mb={2} flexWrap="wrap">
+    <Box
+      sx={{
+        display: { xs: "grid", sm: "flex" },
+        gap: 2,
+        mb: 2,
+        gridTemplateColumns: { xs: "1fr 1fr", sm: "unset" },
+        justifyItems: { xs: "start", sm: "unset" },
+        alignItems: { xs: "start", sm: "flex-start" },
+        flexWrap: { sm: "wrap" },
+        flexDirection: { sm: "row" },
+      }}
+    >
       <TextField
-        label="Data"
         name="date"
         type="date"
         value={filters.date || ""}
         onChange={onChange}
-        inputlabel={<InputLabel shrink={true}>Data</InputLabel>}
         size="small"
       />
       <TextField
@@ -35,6 +44,7 @@ export default function MeetingFilterSort({ filters, onChange, onReset }) {
         value={filters.status || ""}
         onChange={onChange}
         size="small"
+        sx={{ minWidth: 140 }}
       >
         {statusOptions.map((option) => (
           <MenuItem key={option.value} value={option.value}>
@@ -49,6 +59,7 @@ export default function MeetingFilterSort({ filters, onChange, onReset }) {
         value={filters.sortBy || ""}
         onChange={onChange}
         size="small"
+        sx={{ minWidth: 140 }}
       >
         <MenuItem value="">Brak</MenuItem>
         <MenuItem value="startTime">Godzina</MenuItem>
@@ -62,6 +73,7 @@ export default function MeetingFilterSort({ filters, onChange, onReset }) {
         value={filters.order || "asc"}
         onChange={onChange}
         size="small"
+        sx={{ minWidth: 120 }}
       >
         <MenuItem value="asc">Rosnąco</MenuItem>
         <MenuItem value="desc">Malejąco</MenuItem>
